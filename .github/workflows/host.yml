@@ -12,14 +12,73 @@ jobs:
     steps:
     - name: Checkout main
       uses: actions/checkout@v4
-    - name: build CSS
+    - name: Build and deploy
       run: |
-        echo "Build boring CSS theme"
+        if [[ -z "$GITHUB_HOSTNAME" ]]; then
+            GITHUB_HOSTNAME="github.com"
+        fi
+
+        if [[ -n "$TOKEN" ]]; then
+            GITHUB_TOKEN=$TOKEN
+        fi
+
+        if [[ -z "$PAGES_BRANCH" ]]; then
+            PAGES_BRANCH="gh-pages"
+        fi
+
+        if [[ -n "$REPOSITORY" ]]; then
+            TARGET_REPOSITORY=$REPOSITORY
+        else
+            if [[ -z "$GITHUB_REPOSITORY" ]]; then
+                echo "Set the GITHUB_REPOSITORY env variable."
+                exit 1
+            fi
+            TARGET_REPOSITORY=${GITHUB_REPOSITORY}
+        fi
+
+        git config --global url."https://".insteadOf git://
+        # $GITHUB_SERVER_URL is set as a default environment variable in all workflows, default is https://github.com
+        git config --global url."$GITHUB_SERVER_URL/".insteadOf "git@${GITHUB_HOSTNAME}":
+
+        # needed or else we get 'doubious ...' error
+        echo "Disable safe directory check"
+        git config --global --add safe.directory '*'
+
+        git config --global init.defaultBranch 'gh_action' # avoid warning re. default branch name change
+
+        echo "Fetching the boring themes"
+        git submodule update --init --recursive
+        
         cd themes/boring
+        echo "available files in boring theme"
+        ls -l
         yarn install --frozen-lockfile
         yarn build
         cd ../..
-    - name: Build and deploy
-      uses: shalzz/zola-deploy-action@v0.21.0
+
+        version=$(zola --version)
+        remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@${GITHUB_HOSTNAME}/${TARGET_REPOSITORY}.git"
+        remote_branch=$PAGES_BRANCH
+
+        echo "Using $version"
+
+        echo "Building..."
+        zola build
+
+        echo "Pushing artifacts to ${TARGET_REPOSITORY}:$remote_branch"
+
+        cd public
+
+        touch .nojekyll
+
+        git init
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions-bot@users.noreply.${GITHUB_HOSTNAME}"
+        git add .
+
+        git commit -m "Deploy ${TARGET_REPOSITORY} to ${TARGET_REPOSITORY}:$remote_branch"
+        git push --force "${remote_repo}" gh_action:"${remote_branch}"
+
+        echo "Deploy complete"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
