@@ -56,6 +56,9 @@ jobs:
         yarn build
         cd ../..
 
+        echo "installing zola..."
+        wget -q -O - "https://github.com/getzola/zola/releases/download/v0.21.0/zola-v0.21.0-x86_64-unknown-linux-gnu.tar.gz" | tar xzf - -C /usr/local/bin
+        
         version=$(zola --version)
         remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@${GITHUB_HOSTNAME}/${TARGET_REPOSITORY}.git"
         remote_branch=$PAGES_BRANCH
