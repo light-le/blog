@@ -1,6 +1,8 @@
 # The URL the site will be built for
 base_url = "https://example.com"
 
+theme = "boring"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
@@ -14,3 +16,19 @@ highlight_code = true
 
 [extra]
 # Put all your custom variables here
+homepage_title = "Hi, this is my blog!"
+homepage_subtitle = "I like to write about some topics that I like."
+homepage_img_url = "/mountain_beach.jpg"
+
+# Refer https://support.google.com/analytics/answer/9539598?hl=en
+google_analytics_measurement_id = ""
+
+# Refer https://icons8.com/line-awesome for list of icons
+# Both `url` and `icon` should be set for each entry
+[[extra.social]]
+url = "https://github.com/light-le"
+icon = "lab la-github"
+
+[[extra.social]]
+url = "https://www.linkedin.com/in/lightle/"
+icon = "lab la-linkedin"
