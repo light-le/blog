@@ -12,6 +12,13 @@ jobs:
     steps:
     - name: Checkout main
       uses: actions/checkout@v4
+    - name: build CSS
+      run: |
+        echo "Build boring CSS theme"
+        cd themes/boring
+        yarn install --frozen-lockfile
+        yarn build
+        cd ../..
     - name: Build and deploy
       uses: shalzz/zola-deploy-action@v0.21.0
       env:
