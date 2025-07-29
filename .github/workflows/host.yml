@@ -49,12 +49,12 @@ jobs:
         echo "Fetching the boring themes"
         git submodule update --init --recursive
         
-        cd themes/boring
-        echo "available files in boring theme"
-        ls -l
-        yarn install --frozen-lockfile
-        yarn build
-        cd ../..
+        # cd themes/boring
+        # echo "available files in boring theme"
+        # ls -l
+        # yarn install --frozen-lockfile
+        # yarn build
+        # cd ../..
 
         echo "installing zola..."
         wget -q -O - "https://github.com/getzola/zola/releases/download/v0.21.0/zola-v0.21.0-x86_64-unknown-linux-gnu.tar.gz" | tar xzf - -C /usr/local/bin

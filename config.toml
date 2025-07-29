@@ -1,7 +1,7 @@
 # The URL the site will be built for
 base_url = "https://example.com"
 
-theme = "boring"
+theme = "feather"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
