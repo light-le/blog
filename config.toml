@@ -18,10 +18,7 @@ highlight_code = true
 # Put all your custom variables here
 homepage_title = "Hi, this is my blog!"
 homepage_subtitle = "I like to write about some topics that I like."
-homepage_img_url = "/mountain_beach.jpg"
-
-# Refer https://support.google.com/analytics/answer/9539598?hl=en
-google_analytics_measurement_id = ""
+homepage_img_url = "mountain_beach.jpg"
 
 # Refer https://icons8.com/line-awesome for list of icons
 # Both `url` and `icon` should be set for each entry
