@@ -20,6 +20,8 @@ homepage_title = "Hi, this is my blog!"
 homepage_subtitle = "I like to write about some topics that I like."
 homepage_img_url = "mountain_beach.jpg"
 
+google_analytics_measurement_id=""
+
 # Refer https://icons8.com/line-awesome for list of icons
 # Both `url` and `icon` should be set for each entry
 [[extra.social]]
