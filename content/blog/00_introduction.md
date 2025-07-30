@@ -1,0 +1,9 @@
++++
+title = "Introduction"
+date = 2025-07-29
+description = "Introducing myself and my blog"
++++
+
+I've always been wanting to open a blog site for a while now. Afterall, there are so many ideas, so many site projects that are getting hard to track down. My boss also says I'm a good technical writer. Must be because of my wicked sense of humour. You will see it when you read along. But other than that I don't know where he gets that from. I wasn't one of the top students in my English Writing class, which happened more than 10 years ago. My essay grammatical mistakes were marked with so many crosses and circles that the whole papers literrally looked like a graveyard. Despite that, my class professor, James, never discouraged me from writing. My other English writing class lecturer, sorry I forgot her name, has a ritual where at the beginning of every class she would make her students write anything for 5 minutes. Anything comes to mind, really. I didn't have to worry about grammar because she didn't even read them after. I supposed it's like a mental exercise to start the class.
+
+Back to the presence I've been working as a professional data engineer for several years now. I rarely ever get a chance for writings outside of a few emails and slack messages. But they couldn't be further from the kind of writings that I did in college. So I'm quite enthusiastics whenever I do a technical blog post for my company, and I'm quite good at it. At least my boss says I am. But the company blog is mainly for professionals and you would have to adhere to rules and protocols. This one is more open where I can express my true self. That also means you won't find anything here affiliated with my current and past companies. This blog is strictly personal and outside of work. That being said, it will show you my expertise and the skills that I build up over the years. 

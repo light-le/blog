@@ -16,8 +16,8 @@ highlight_code = true
 
 [extra]
 # Put all your custom variables here
-homepage_title = "Hi, this is my blog!"
-homepage_subtitle = "I like to write about some topics that I like."
+homepage_title = "Hi, my name is Anh Le!"
+homepage_subtitle = "This is a blog about things that I find interesting."
 homepage_img_url = "mountain_beach.jpg"
 
 google_analytics_measurement_id=""
@@ -31,3 +31,7 @@ icon = "lab la-github"
 [[extra.social]]
 url = "https://www.linkedin.com/in/lightle/"
 icon = "lab la-linkedin"
+
+[[extra.social]]
+url = "mailto:aerortsanh@gmail.com"
+icon = "las la-at"
