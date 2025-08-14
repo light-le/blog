@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="utf-8">
+
+        
+        
+
+        <link rel="stylesheet" href="https://light-le.github.io/journal/css/style.css"/>
+        <link rel="stylesheet" href="https://light-le.github.io/journal/line-awesome/css/line-awesome.min.css"/>
+        <script src="https://light-le.github.io/journal/js/main.js" defer></script>
+        
+    <title>GenAI in Game Assets Generation | </title>
+
+    </head>
+
+    <body class="bg-white dark:bg-slate-900 transition ease-in-out">
+        <section>
+            
+    
+<div class="sticky top-0 bg-slate-100 dark:bg-slate-800">
+    <div class="container mx-auto flex place-content-between
+        py-16 lg:py-8 font-sans text-6xl lg:text-2xl text-slate-900
+        dark:text-slate-300">
+        <div class="flex">
+            
+            
+            
+            
+            <a class="m-0 p-0 text-slate-900 hover:text-slate-700
+                            dark:text-slate-300 dark:hover:text-slate-200" href="https://light-le.github.io/journal/blog">
+                /blog
+            </a>
+            
+            
+            
+            
+            
+            
+        </div>
+        <div class="flex gap-4">
+            <div id="back-to-top" class="hidden cursor-pointer">
+                <i class="las la-level-up-alt"></i>
+            </div>
+            <a href="https://light-le.github.io/journal"><i class="las la-home"></i></a>
+            <div id="darkmode-toggle" class="cursor-pointer">
+                <div class="hidden dark:inline">
+                    <i class="las la-sun"></i>
+                </div>
+                <div class="inline dark:hidden">
+                    <i class="las la-moon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container mb-16">
+        <div class="mt-4 font-serif text-slate-600 dark:text-slate-500 text-4xl lg:text-base">
+            2025-07-31
+        </div>
+        <h1 class="w-full mt-4 mb-8 font-serif text-8xl lg:text-4xl text-slate-900 dark:text-slate-300">
+            GenAI in Game Assets Generation
+        </h1>
+        <div class="w-100 border-t mb-8 border-slate-300 dark:border-slate-700"></div>
+        <div class="prose-boring">
+            <h1 id="how-it-started">How it started</h1>
+<p>I discovered that GenAI is really good at story telling. But anyone with a laptop can use it to orchestrate a book, like I did in my <a href="https://light-le.github.io/journal/blog/01-how-i-use-genai/">previous post</a>. If I were to use it in my next product it would be something novel so it won't be labelled a ChatGPT-wrapper. The idea for a game popped up because at the same time I were learning Rust. I've been loving it so far. Suffice to say, at the time of this writing, this whole blog is powered by <a href="https://www.getzola.org/">Zola</a>, a Rustlings tool. I should do a blog post on Rust. But that for another time. The point is, learning Rust introduces me to a game engine named <a href="https://bevy.org">Bevy</a>. I have dabled in game development with Love2D back in 2020 when I took a class on gaming development. Haven't made any game since but the concepts are still fresh in my mind. You get a game engine, load some image sprites, put some codes in to give some controls, add a story line and some quests then bam, you have a game. Well sort of.</p>
+<p>I'm a millenial. I grew up in the 90s where Gameboy Advance games were popular among us. The most popular ones were the Pokemon core series where the main player travel around the worlds catching pokemons, train them and have them battle other trainers' pokemons to become the champion. We had an online community 'forum' back then where we discussed different strategies and ways of playing. There were a lot of fan-made games that used the contents from the main ones. I thought it was really cool to be able to make a game yourself like that. One day, I got this idea about incorporating the real world into a pokemon game so the player can travel around and learn about diffrent cultures and stories in the real world, not a fictional one. The problem was, I didn't know how to make those contents for other countries. As a kid I barely travelled outside of mine. So this was supposed to be a team effort, not just me. So I opened a 'forum thread' calling for participants. A lot of people loved the idea. A few of them joined me initially. Then came the 2nd problem. I did not know where to start. I wasn't a coding wizard back then. I didn't know how to rip/port a game, or putting them together for a game engines, if they existted back then. But without any technical expertise, the team eventually fell apart. Everyone moved on.</p>
+<p>Fast forward to 2025. We have GenAI that could crank out novel stories that could resemble the real world in seconds, game engines that make the development process much better. I also have game development experience under my belt. It would be a crime against my childhood self not to start. We won't be making Pokemon game exactly, as I don't like the possibility of Nintendo lawyers knocking on my door. But we would still be making an open world RPG that resembles the real world - our world that we are living in.</p>
+<h1 id="how-it-works">How it works</h1>
+<h2 id="game-engine-concept">Game Engine Concept</h2>
+<p>As mentioned before, a game generally consists of components like image sprites, tiles, text dialogues, etc. We call them assets. Beside those assets we also need codes to dictate how those images move accross the screen and interact with the player. Below are some of the examples:</p>
+<ul>
+<li>An NPC walking to the player: the engine would translate the NPC sprite image from the edge of the screen to the player at the center.</li>
+<li>That NPC begins talking, a dialogue box appears at the bottom of the screen with texts running as they speak: the engine would load the dialogue message, which is a game asset. Then animate that message in the box.</li>
+<li>A landmark appears in the scene: the engine would load the image sprite that represents the landmark.</li>
+</ul>
+<h2 id="how-game-assets-are-built">How game assets are built</h2>
+<p>Normally, all those game assets (and codes) are pre-defined and packaged altogether. Your game would have everything it need to run offline without futther inputs. But for our games it impossible for me to make all those assets, considering the fact that our world is huge. It's also very likely that the players are not going to visit all of the locations, making it wasteful to package everything beforehand. Therefore, we will only generate assets <strong>on the go</strong>. Here's a high level example:</p>
+<p>Suppose the player is visiting Tokyo, Japan. To create a unique scene of the location, we will generate image sprites that repensent the landmark in that location. How does a game engine knows what landmarks are in Tokyo, or any other cities in the world? Well it can also prompt an LLM. The prompt can be crafted by the game engine itself.</p>
+<blockquote>
+<p>Prompt: Give me a list of all the landmarks in Tokyo, Japan.</p>
+</blockquote>
+<blockquote>
+<p>Answer (Structured Output): ["Imperial Palace", "Meiji Jingu"]</p>
+</blockquote>
+<p>I won't commend the answer given by GenAI. Everyone knows that it's great when asked for knowledge questions like this. But what truly make it even more amazing than it already is is the ability to format its own answer as a <a href="https://ai.google.dev/gemini-api/docs/structured-output">structured output</a>, in this case a list of string items. This allow me to effectively follow up with image prompts.</p>
+<blockquote>
+<p>Prompt: Generate an image sprite of the Imperial Palace in Tokyo, Japan.</p>
+</blockquote>
+<blockquote>
+<p>Prompt: Generate an image sprite of the Meiji Jingu in Tokyo, Japan.</p>
+</blockquote>
+<p>And you'd get these 2 images as result.</p>
+<table><thead><tr><th style="text-align: center">Imperial Palace</th><th style="text-align: center">Meiji Jingu</th></tr></thead><tbody>
+<tr><td style="text-align: center"><img src="https://light-le.github.io/journal/blog/02-game-assets-generation/imperial_palace.jpeg" alt="Imperial Palace" /></td><td style="text-align: center"><img src="https://light-le.github.io/journal/blog/02-game-assets-generation/meiji_jingu.jpeg" alt="Meiji Jingu" /></td></tr>
+</tbody></table>
+<p>Note that the actual prompts are more complicated than these. You have to specify styles and artistics. But you get an idea of how the flow works. Below is the pseudo-code in python.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#bf616a;">LOCATION </span><span>= &quot;</span><span style="color:#a3be8c;">Tokyo, Japan</span><span>&quot;
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">structured_prompt</span><span>(</span><span style="color:#bf616a;">prompt</span><span>: str, </span><span style="color:#bf616a;">output_format</span><span>):
+</span><span>    </span><span style="color:#65737e;">&#39;&#39;&#39;Make requests to LLM service and parse result as output_format&#39;&#39;&#39;
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">image_prompt</span><span>(</span><span style="color:#bf616a;">prompt</span><span>: str):
+</span><span>    </span><span style="color:#65737e;">&#39;&#39;&#39;Make requests to LLM service and parse result as image format&#39;&#39;&#39;
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">main</span><span>():
+</span><span>    landmarks = </span><span style="color:#bf616a;">structured_prompt</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">Give me a list of landmarks in </span><span>{</span><span style="color:#bf616a;">LOCATION</span><span>}&quot;, </span><span style="color:#bf616a;">output_format</span><span>=list[str])
+</span><span>    images = [</span><span style="color:#bf616a;">image_prompt</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">Generate an image sprite of the </span><span>{landmark}</span><span style="color:#a3be8c;"> in </span><span>{</span><span style="color:#bf616a;">LOCATION</span><span>}&quot;) </span><span style="color:#b48ead;">for </span><span>landmark </span><span style="color:#b48ead;">in </span><span>landmarks]
+</span><span>    game_engine.</span><span style="color:#bf616a;">load_assets</span><span>(images)
+</span></code></pre>
+<h2 id="building-tiles-layer">Building tiles layer</h2>
+<p>Now that we have those image sprite dynamically generated, we need to put them into our game. But we can't just put them into blank space. We need some kind of foundation layer in the background. In our case we need to lay down some tiles, like the 4 grass tiles below.</p>
+<p><img src="https://light-le.github.io/journal/blog/02-game-assets-generation/grass.png" alt="grass tiles" /></p>
+<p>If you are not familiar with game development, you'd be confused. These are 4 tiles, each of them are 32x32 pixels. But anyone of them, used repeatedly, could build the ground layer for the whole world. For example if we pick the first one, and put up a 20x20 tile sheet (640x640 pixels). Below is part of the Bevy codes that spawn them followed by the result.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">setup</span><span>(</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">commands</span><span>: Commands, </span><span style="color:#bf616a;">asset_server</span><span>: Res&lt;AssetServer&gt;) {
+</span><span>    commands.</span><span style="color:#96b5b4;">spawn</span><span>(Camera2d);
+</span><span>    commands.</span><span style="color:#96b5b4;">spawn</span><span>((
+</span><span>        Sprite {
+</span><span>            image: asset_server.</span><span style="color:#96b5b4;">load</span><span>(&quot;</span><span style="color:#a3be8c;">tiles/grass_tiles.png</span><span>&quot;),
+</span><span>            texture_atlas: Some(TextureAtlas {
+</span><span>                layout: asset_server.</span><span style="color:#96b5b4;">add</span><span>(TextureAtlasLayout::from_grid(
+</span><span>                    UVec2::splat(</span><span style="color:#d08770;">32</span><span>),
+</span><span>                    </span><span style="color:#d08770;">8</span><span>,
+</span><span>                    </span><span style="color:#d08770;">161</span><span>,
+</span><span>                    None,
+</span><span>                    None,
+</span><span>                )),
+</span><span>                index: </span><span style="color:#d08770;">1</span><span>,
+</span><span>            }),
+</span><span>            custom_size: Some(Vec2::splat(</span><span style="color:#d08770;">32.0 </span><span>* </span><span style="color:#d08770;">20.0</span><span>)),
+</span><span>            image_mode: SpriteImageMode::Tiled {
+</span><span>                tile_x: </span><span style="color:#d08770;">true</span><span>,
+</span><span>                tile_y: </span><span style="color:#d08770;">true</span><span>,
+</span><span>                stretch_value: </span><span style="color:#d08770;">1.0</span><span>,
+</span><span>            },
+</span><span>            ..</span><span style="color:#96b5b4;">default</span><span>()
+</span><span>        },
+</span><span>    ));
+</span><span>}
+</span></code></pre>
+<p><img src="https://light-le.github.io/journal/blog/02-game-assets-generation/grass_20_by_20.png" alt="grass_layer" /></p>
+<p>For more information or examples you can look into the <a href="https://bevy.org/examples/2d-rendering/sprite-tile/">Bevy documentation</a>. It's worth saying that I didn't graphically create these tiles myself. They are parts of the portfolio of <a href="https://www.deviantart.com/ekat99">Ekat99</a>. They have lots of awesome works, especially for Pokemon games.</p>
+<p>Can we use GenAI to graphically generate the tile images? It turns out to be really hard for LLM to generate a singular tile that can be used repeatedly. The current models are trained to generate pictures of scenery, places, humans, objects, etc. An abstract 32x32 tile that represent nothing but a blade of grass. When I prompt for that I often get back a whole picture of a grass scene with flowers and trees and even animals in it. That's not useable in this game setting so I resort to using tiles the traditional way, prepackaged.</p>
+<p>But wait, in game there isn't just 1 tile that make the entire world. It would be boring if you see grass everywhere you go. You need to see some roads, bricks, flowers, etc. Maybe a lamb post here, a pretty fence there. There should be mountains, and lakes and river and tundra and lava and whats not. If we are not using GenAI to create those images, can we use it to dictate how they are layered?</p>
+<p>This is where it gets more complicated than generating landmarks. Let's say you have a perfect model that gives you the perfect answer everytime. It's not possible to generate Rust codes <strong>on the go</strong>, because all codes must be loaded when you compile the app, unless it's a separate program that is in charge of generating the Bevy codes. Another way to dictate how the tiles are layered withtout using Rust is to use the config <code>.tmx</code> file, which I considered as another kind of assets. The file has an XML format and the main part of the file is like csv format. Here's an example of a 10x10 tilesheet.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>0,0,0,0,0,0,0,0,0,3
+</span><span>0,0,0,0,0,0,0,0,0,3
+</span><span>0,0,0,0,0,0,0,0,0,3
+</span><span>2,0,0,1,0,0,0,1,0,3
+</span><span>0,0,0,0,0,0,0,0,0,3
+</span><span>0,0,0,0,0,0,0,0,0,3
+</span><span>0,0,0,0,1,0,0,0,0,3
+</span><span>0,0,0,0,0,0,0,0,0,3
+</span><span>0,2,0,0,0,0,0,1,0,3
+</span><span>0,0,0,0,0,2,0,0,0,3
+</span></code></pre>
+<p>Then inside the same file we define 0 -&gt; grass tile, 1 -&gt; flower tile, 2 -&gt; squirrel, 3 -&gt; fence. You get the idea. I did try to use GenAI to generate the <code>.tmx</code> file but it would hallucinate like crazy. At some point it created a very long number that could not be loaded into the game engine.</p>
+<p>So I'm back to the 'traditional' way and generate those tiles using hard-code and algorithm. In game development we have a term for that - procedural generation. This is a whole other topic and I will save that for another blog post. But the gist is that it let you generate tile layout following a specific predefined pattern. So your world can be more than just a single grass tile, but everything is in order. For example when I used it to layer roads and brick tiles to make the place more city-like. You can see the roads are straight. In addition, there's the city edge where bricks meet grass tiles.</p>
+<p><img src="https://light-le.github.io/journal/blog/02-game-assets-generation/roads.png" alt="roads" /></p>
+<h1 id="the-end-result">The end result</h1>
+<p>Now that we have the foundation, and the building image sprites. We can place them into our game.</p>
+<p><img src="https://light-le.github.io/journal/blog/02-game-assets-generation/v1_demo.gif" alt="demo" /></p>
+<p>Thank you for reading.</p>
+
+        </div>
+    </div>
+
+        </section>
+    </body>
+</html>

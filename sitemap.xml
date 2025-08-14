@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://light-le.github.io/journal/</loc>
+    </url>
+    <url>
+        <loc>https://light-le.github.io/journal/blog/</loc>
+    </url>
+    <url>
+        <loc>https://light-le.github.io/journal/blog/00-introduction/</loc>
+        <lastmod>2025-07-29</lastmod>
+    </url>
+    <url>
+        <loc>https://light-le.github.io/journal/blog/01-how-i-use-genai/</loc>
+        <lastmod>2025-07-30</lastmod>
+    </url>
+    <url>
+        <loc>https://light-le.github.io/journal/blog/02-game-assets-generation/</loc>
+        <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+        <loc>https://light-le.github.io/journal/blog/03-story-development/</loc>
+        <lastmod>2025-08-07</lastmod>
+    </url>
+</urlset>
